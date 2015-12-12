@@ -6,6 +6,6 @@ var deleteNode = function(node) {
     if(!node.next.next) {
         node.next = null;
     } else {
-    node.next = node.next.next;
+      node.next = node.next.next;
     }
 };
