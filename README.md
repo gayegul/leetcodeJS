@@ -1,2 +1,2 @@
 # leetcodeJS
-Leetcode challenges solved using JS
+Leetcode algorithms challenges solved using JS
