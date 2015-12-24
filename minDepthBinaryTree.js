@@ -1,3 +1,4 @@
+//Recursively
 var minDepth = function(root) {
     if(!root) return 0;
     var depth = 1;
