@@ -1,30 +1,59 @@
-//Implement the following operations of a queue using stacks.
-
-//push(x) -- Push element x to the back of queue.
-//pop() -- Removes the element from in front of queue.
-//peek() -- Get the front element.
-//empty() -- Return whether the queue is empty.
-
+/**
+ * @constructor
+ */
 var Queue = function() {
-    this.length = 0;
-    this.queue = [];
+    this.stackToPush = [];
+    this.stackToPop = [];
 };
 
+/**
+ * @param {number} x
+ * @returns {void}
+ */
 Queue.prototype.push = function(x) {
-    this.queue.push(x);
-    this.length++;
+    if(!this.stackToPop.length) this.stackToPush.push(x);
+    else {
+        while(this.stackToPop.length) {
+            this.stackToPush.push(this.stackToPop.pop());
+        }
+        this.stackToPush.push(x);
+    }
 };
 
+/**
+ * @returns {void}
+ */
 Queue.prototype.pop = function() {
-    this.queue.splice(0,1);
-    this.length--;
+    var dequeued;
+    if(this.stackToPop.length) dequeued = this.stackToPop.pop();
+    else {
+        while(this.stackToPush.length) {
+            this.stackToPop.push(this.stackToPush.pop());
+        }
+        dequeued = this.stackToPop.pop();
+    }
+    return dequeued;
 };
 
+/**
+ * @returns {number}
+ */
 Queue.prototype.peek = function() {
-    return this.queue[0];
+    var peeked;
+    if(this.stackToPop.length) peeked = this.stackToPop.pop();
+    else {
+        while(this.stackToPush.length) {
+            this.stackToPop.push(this.stackToPush.pop());
+        }
+        peeked = this.stackToPop.pop();
+    }
+    this.stackToPop.push(peeked);
+    return peeked;
 };
 
+/**
+ * @returns {boolean}
+ */
 Queue.prototype.empty = function() {
-    if(!this.length) return true;
-    return false;
+    return (!this.stackToPush.length && !this.stackToPop.length);
 };
