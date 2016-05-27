@@ -11,16 +11,14 @@
  */
 
 var isBalanced = function(root) {
-    if(!root) return true;
-    var difference = Math.abs(getHeight(root.left) - getHeight(root.right));
-    if(difference >= 2) return false;
-    else return (isBalanced(root.left) && isBalanced(root.right));
+    return getHeightIfBalanced(root) !== -1;
 };
 
-function getHeight(root) {
+function getHeightIfBalanced(root) {
     if(!root) return 0;
-    var left = getHeight(root.left);
-    var right = getHeight(root.right);
-    var result = Math.max(left, right);
-    return ++result;
-}
+    var leftResult = getHeightIfBalanced(root.left);
+    if(leftResult === -1) return -1;
+    var rightResult = getHeightIfBalanced(root.right);
+    if(rightResult === -1) return -1;
+    return Math.abs(leftResult - rightResult) <= 1 ? Math.max(leftResult, rightResult) + 1 : -1;
+ }
