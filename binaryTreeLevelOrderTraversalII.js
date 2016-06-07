@@ -13,36 +13,29 @@
 var levelOrderBottom = function(root) {
     if(!root) return [];
     var result = [[root.val]];
-    var tempVal = [];
-    var temp = [];
     var queue = [root];
-    var finalResult = [];
+    var temp = [];
+    var val = [];
 
     while(queue.length) {
         var popped = queue.shift();
 
-        if(popped.left) {
-            tempVal.push(popped.left.val);
-            temp.push(popped.left);
-        }
-        if(popped.right) {
-            tempVal.push(popped.right.val);
-            temp.push(popped.right);
-        }
-
-        if(!queue.length) {
-            if(temp.length) {
-                result.push(tempVal);
-                queue = temp;
-                temp = [];
-                tempVal = [];
+        if(popped) {
+            if(popped.left) {
+                temp.push(popped.left);
+                val.push(popped.left.val);
+            }
+            if(popped.right) {
+                temp.push(popped.right);
+                val.push(popped.right.val);
             }
         }
+        if(!queue.length) {
+            if(val.length) result.push(val);
+            val = [];
+            queue = temp;
+            temp = [];
+        }
     }
-
-    while(result.length) {
-        var item = result.pop();
-        finalResult.push(item);
-    }
-    return finalResult;
+    return result.reverse();
 };
