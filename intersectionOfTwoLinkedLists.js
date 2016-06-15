@@ -13,40 +13,41 @@
  */
 
 var getIntersectionNode = function(headA, headB) {
-  var lengthA = getLength(headA);
-  var lengthB = getLength(headB);
+    if(!headA || !headB) return null;
 
-  if(!lengthA || !lengthB) return null;
+    var currentA = headA;
+    var currentB = headB;
+    var counterA = 0;
+    var counterB = 0;
 
-  while(lengthA > lengthB) {
-    headA = headA.next;
-    lengthA--;
-  }
-
-  while(lengthB > lengthA) {
-    headB = headB.next;
-    lengthB--;
-  }
-
-  while(lengthA) {
-    if(headA.val === headB.val) return headA;
-    else {
-      headA = headA.next;
-      headB = headB.next;
-      lengthA--;
+    while(currentA) {
+        counterA++;
+        currentA = currentA.next;
     }
-  }
-  return null;
+
+    while(currentB) {
+        counterB++;
+        currentB = currentB.next;
+    }
+
+    currentA = headA;
+    currentB = headB;
+
+    while(counterA > counterB) {
+        currentA = currentA.next;
+        counterA--;
+    }
+
+    while(counterB > counterA) {
+        currentB = currentB.next;
+        counterB--;
+    }
+
+    while(currentA) {
+        if(currentA === currentB) return currentA;
+        currentA = currentA.next;
+        currentB = currentB.next;
+    }
+
+    return null;
 };
-
-function getLength(list) {
-  var length = 0;
-  if(!list) return length;
-  length++;
-
-  while(list.next) {
-    list = list.next;
-    length++;
-  }
-  return length;
-}
