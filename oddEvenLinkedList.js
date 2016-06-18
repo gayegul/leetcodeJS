@@ -9,31 +9,18 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-
+ 
 var oddEvenList = function(head) {
-    if(!head) return null;
-    
-    var current = head.next;
-    var prev = head;
-    var head2 = current;
-    var tail2 = current;
-
-    while(current) {
-        prev.next = current.next;
-        if(head2 === tail2) {
-            head2.next = current;
-            tail2 = current;
-        }
-        else if(head2 !== tail2) {
-            tail2.next = current;
-            tail2 = current;
-        }
-
-        current.next = null;
-        if(prev.next) prev = prev.next;
-        current = prev.next;
+    if(!head || !head.next) return head;
+    var currentOdd = head;
+    var currentEven = currentOdd.next;
+    var even = currentEven;
+    while(currentEven && currentEven.next) {
+        currentOdd.next = currentEven.next;
+        currentOdd = currentEven.next;
+        currentEven.next = currentOdd.next;
+        currentEven = currentOdd.next;
     }
-
-    prev.next = head2;
+    currentOdd.next = even;
     return head;
 };
