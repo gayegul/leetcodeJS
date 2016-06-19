@@ -1,35 +1,38 @@
-//Reverse a singly-linked list.
-//Iteratively
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+
+// iteratively
 var reverseList = function(head) {
-    if(!head) return head;
+    if(!head) return [];
+
+    var prev = null;
     var current = head;
-    var middle = current.next;
-    head.next = null;
-    while(current && middle) {
-        var forward = middle.next;
-        middle.next = current;
-        current = middle;
-        middle = forward;
+
+    while(current.next) {
+        var temp = current.next;
+        current.next = prev;
+        prev = current;
+        current = temp;
     }
+
+    current.next = prev;
     return current;
 };
 
-//Recursively
-function reverse(forward, current) {
-  var head;
-  if(forward.next) {
-    head = reverse(forward.next, forward);
-  } else {
-    head = forward;
-  }
-  forward.next = current;
-  return head;
-}
-
+// recursively
 var reverseList = function(head) {
-  if(!head || !head.next) return head;
-  var initialHead = head;
-  head = reverse(head.next, head);
-  initialHead.next = null;
-  return head;
+    if(!head || !head.next) return head;
+    var nextHead = reverseList(head.next);
+    head.next.next = head;
+    head.next = null;
+    return nextHead;
 };
