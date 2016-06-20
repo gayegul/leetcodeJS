@@ -43,3 +43,19 @@ function isPalindrome(arr) {
   }
   return true;
 }
+
+// recursively
+var isSymmetric = function(root) {
+    if(!root) return true;
+    return compare(root.left, root.right);
+};
+
+function compare(left, right) {
+    if(!left && !right) return true;
+    if(left && !right) return false;
+    if(right && !left) return false;
+    if(left.val !== right.val) return false;
+    var partI = compare(left.left, right.right);
+    var partII = compare(left.right, right.left);
+    return partI && partII;
+}
